@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="../styles/Criteria.css" rel="stylesheet" />
+    <link href="../styles/Navbar.css" rel="stylesheet" />
+    <meta charset="UTF-8" />
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'"
+    />
+    <meta
+      http-equiv="X-Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'"
+    />
+    <title>PM Scheduler</title>
+  </head>
+  <body>
+    <div class="docName" name="1"></div>
+    <ul id="navbar">
+    </ul>
+
+    <h1>Enter criteria for a successfull project:</h1>
+    <input type="textbox" class="critInput"></input>
+    <p id="info"></p>
+</body>
+<script src="../scripts/Navbar.js"></script>
+<script src="../scripts/Criteria.js"></script>
+</html>

@@ -1,0 +1,40 @@
+ul.navbar {
+    position: absolute;
+    top:0;
+    left: 0;
+    min-width:400px;
+    width: 100%;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    background-color: #222222;
+    max-height: 5vh;
+    overflow:hidden;
+}
+
+ul.navbar li {
+    /* display: inline; */
+    float: left;
+}
+
+ul.navbar li a{
+    background-color: #222222;
+    display: flex;
+    min-width: 80px;
+    height:4vh;
+    width:8vw;
+    color: #d2c3a3;
+    align-items: center;
+    justify-content: center;
+    border-right: 2px solid #141414;
+    text-decoration: none;
+
+}
+
+ul.navbar li a:hover:not(active){
+    background-color:#391b1b;
+}
+
+ul.navbar li a.activeTab{
+    background-color:#141414;
+}
