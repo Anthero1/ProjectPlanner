@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href="../styles/NewCrit.css" rel="stylesheet" />
+    <meta charset="UTF-8" />
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'"
+    />
+    <meta
+      http-equiv="X-Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'"
+    />
+    <title></title>
+</head>
+<body>
+    <h1>Enter a description for the criteria: </h1>
+    <textarea id="description"></textarea>
+    <h1>How does this criteria lead to this project succeeding? (if we don't accomplish this criteria, what happens?)</h1>
+    <textarea id="lead"></textarea>
+    <h1>How will you measure this criteria?</h1>
+    <textarea id="measures"></textarea>
+    <h1>How does this criteria tie into the mission statement?</h1>
+    <textarea id="mission"></textarea>
+    <h1>Please enter a short title for this criteria: (20 character limit)</h1>
+    <input type="text" id="title"></input>
+    <button id="saveCrit">Save</button>
+</body>
+<script src="../scripts/NewCrit.js"></script>
+</html>

@@ -1,6 +1,5 @@
 html {
     background-color:#141414;
-    height: 200vw;
     font-family: Arial, Helvetica, sans-serif;
     padding-top:4vh;
     overflow: visible;
@@ -10,3 +9,40 @@ html {
 h1 {
     color:aquamarine;
 }
+
+div.critRanker {
+    background-color:#141414;
+    width:1200px;
+    padding:3px;
+    border:3px solid #2f2f2f;
+    margin-bottom: 3px;
+}
+
+div.comparison:not([data-comp-num="0"]){
+    border-top: 2px solid #2f2f2f;
+
+}
+
+p.leftCrit {
+    color:antiquewhite;
+    display: inline-block;
+    margin-right: 30px;
+    margin-left: 10px;
+    width: 250px;
+    text-align: end;
+}
+
+input.rankChoice {
+    display: inline-block;
+    margin-left:20px;
+    margin-right:20px;
+}
+
+p.rightCrit {
+    color:antiquewhite;
+    display: inline-block;
+    margin-left:30px;
+    margin-right:10px;
+    width: 250px;
+}
+
