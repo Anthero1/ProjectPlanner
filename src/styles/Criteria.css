@@ -21,7 +21,7 @@ div.criteria {
 }
 
 div.details {
-    background-color:aliceblue;
+    background-color: #141414;
     height:0px;
     overflow: hidden;
     -webkit-transition: all 0.5s ease-in-out;
@@ -30,24 +30,43 @@ div.details {
     transition: all 0.5s ease-in-out;
 }
 
+div.details p{
+    color:aquamarine;
+    font-size: 15px;
+}
+
+div.details textarea{
+    width:85%;
+    margin-bottom: 20px;
+    height: 40px;
+    background-color: #212121;
+    color:#c5c2bd;
+}
+
 div.details[data-open="true"]{
-    height: 200px;
+    min-height: 460px;
+    overflow-y:visible;
 }
 
 textarea.critName {
     margin-top: 3px;
     color:#c2b8aa;
     display: inline;
-    background-color: #141414;
+    background-color: #212121;
     border: transparent;
     size-adjust: fixed;
     width: 80%;
     height: 16px;
+    width: 300px;
 }
 
-::-webkit-resizer {
+textarea.critName::-webkit-resizer {
     display: none;
 }
+
+/* div.details textarea::-webkit-resizer {
+    background-color:  #141414; 
+}  */
 
 button.criteriaDelete {
     width: 25px;
@@ -89,6 +108,8 @@ button.saveButton {
     width: 70px;
     height: 25px;
     float: right;
+    color:aquamarine;
+    font-size: 15px;
     background-color:#2f2f2f;
 }
 
@@ -109,4 +130,25 @@ button#addCrit:after{
     font-family: Arial, sans-serif;
     color: #616161;
     font-weight: lighter;
+}
+
+/* width */
+::-webkit-scrollbar {
+    background:#141414;
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background:#141414;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #5b5b5bb4; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background:#3b3b3b;
 }

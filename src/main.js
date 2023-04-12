@@ -28,7 +28,7 @@ const createWindow = () => {
   ipcMain.handle("leaveCrit", (event) => {
     const options = {
       type: 'warning',
-      buttons: ['Cancel', 'Leave'],
+      buttons: ['Leave', 'Cancel'],
       icon: "r.jpg",
       message: 'Leave Criteria Screen?',
       detail: 'Changes that you made will not be saved.',
@@ -75,8 +75,7 @@ ipcMain.on("newCrit", (event) => {
     if(!discard){
       const options = {
         type: 'warning',
-        buttons: ['Cancel', 'Leave'],
-        icon: "r.jpg",
+        buttons: ['Leave', 'Cancel'],
         message: 'Close Window?',
         detail: 'Changes that you made will not be saved.',
         noLink: true,

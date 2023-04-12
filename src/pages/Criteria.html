@@ -20,7 +20,23 @@
     <ul id="navbar"></ul>
 
     <h1>Criteria:</h1>
-    <div id="critList"></div>
+    <div id="critList">
+      <div class="criteria" data-crit-num="0">
+        <textarea class="critName" data-crit-num="0">Testing</textarea>
+        <button class="criteriaDelete" data-crit-num="0"></button>
+        <button class="critDropdown" data-crit-num="0"></button>
+        <div class="details" data-crit-num="0" data-open="false">
+          <p>Description</p>
+          <textarea class="Description"></textarea>
+          <p>How does this criteria lead to this project succeeding? (if we don't accomplish this criteria, what happens?)</p>
+          <textarea class="leadToSuccess"></textarea>
+          <p>How will you measure this criteria?</p>
+          <textarea class="Measure"></textarea>
+          <p>How does this criteria tie into the mission statement?</p>
+          <textarea class="Mission"></textarea>
+        </div>
+      </div>
+    </div>
     <button id="addCrit"></button>
 </body>
 <script src="../scripts/Navbar.js"></script>

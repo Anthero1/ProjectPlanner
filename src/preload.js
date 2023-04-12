@@ -36,5 +36,14 @@ ipcRenderer.on("newCrit", (event, content) => {
     let critListDiv = document.getElementById("critList");
     i=critList.length-1;
     critListDiv.insertAdjacentHTML('beforeend', ('<div class="criteria" data-crit-num="'+i+'"><textarea class="critName" data-crit-num="'+i+'">'+critList[i][0]+'</textarea><button class="criteriaDelete" data-crit-num="'+i+'"></button><button class="critDropdown" data-crit-num="'+i+'"></button><div class="details" data-crit-num="'+i+'" data-open="false"></div></div>'));
+    let description = critListDiv.getElementsByClassName("criteria").item(i).getElementsByClassName("details").item(0); 
+    description.insertAdjacentHTML("beforeend",'<p>Description</p>');
+    description.insertAdjacentHTML("beforeend", '<textarea class="Description">'+critList[i][2]+'</textarea>')
+    description.insertAdjacentHTML("beforeend", "<p>How does this criteria lead to this project succeeding? (if we don't accomplish this criteria, what happens?)</p>");
+    description.insertAdjacentHTML("beforeend", '<textarea class="leadToSuccess">'+critList[i][3]+'</textarea>')
+    description.insertAdjacentHTML("beforeend", '<p>How will you measure this criteria?</p>');
+    description.insertAdjacentHTML("beforeend", '<textarea class="Measure">'+critList[i][4]+'</textarea>')
+    description.insertAdjacentHTML("beforeend",'<p>How does this criteria tie into the mission statement?</p>');
+    description.insertAdjacentHTML("beforeend", '<textarea class="Mission">'+critList[i][5]+'</textarea>')
   }
 })

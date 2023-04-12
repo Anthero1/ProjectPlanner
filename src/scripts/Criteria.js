@@ -18,6 +18,15 @@ const loadCritList = () => {
   let critList = JSON.parse(sessionStorage.getItem("critList"));
   for(var i = 0; i<critList.length;i++){
     critListDiv.insertAdjacentHTML('beforeend', ('<div class="criteria" data-crit-num="'+i+'"><textarea class="critName" data-crit-num="'+i+'">'+critList[i][0]+'</textarea><button class="criteriaDelete" data-crit-num="'+i+'"></button><button class="critDropdown" data-crit-num="'+i+'"></button><div class="details" data-crit-num="'+i+'" data-open="false"></div></div>'));
+    let description = critListDiv.getElementsByClassName("criteria").item(i).getElementsByClassName("details").item(0); 
+    description.insertAdjacentHTML("beforeend",'<p>Description</p>');
+    description.insertAdjacentHTML("beforeend", '<textarea class="Description">'+critList[i][2]+'</textarea>')
+    description.insertAdjacentHTML("beforeend", "<p>How does this criteria lead to this project succeeding? (if we don't accomplish this criteria, what happens?)</p>");
+    description.insertAdjacentHTML("beforeend", '<textarea class="leadToSuccess">'+critList[i][3]+'</textarea>')
+    description.insertAdjacentHTML("beforeend", '<p>How will you measure this criteria?</p>');
+    description.insertAdjacentHTML("beforeend", '<textarea class="Measure">'+critList[i][4]+'</textarea>')
+    description.insertAdjacentHTML("beforeend",'<p>How does this criteria tie into the mission statement?</p>');
+    description.insertAdjacentHTML("beforeend", '<textarea class="Mission">'+critList[i][5]+'</textarea>')
   }
 }
 
@@ -38,7 +47,6 @@ document.getElementById("critList").addEventListener("click", (event) => {
       })
       document.getElementsByClassName("criteria").item(i).setAttribute("data-crit-num", temp-1);
     }
-
     let compList = JSON.parse(sessionStorage.getItem("compList"));
     var loops = 0;
     for(var i = 0; i < critList.length; i++){
@@ -57,7 +65,8 @@ document.getElementById("critList").addEventListener("click", (event) => {
     let critList = JSON.parse(sessionStorage.getItem("critList"));
     let currentCritNum = event.target.getAttribute("data-crit-num");
     let currentCrit = document.querySelector(("textarea[data-crit-num='"+currentCritNum+"']"));
-    critList[currentCritNum][0] = currentCrit.value;
+    let details = document.querySelector(("div.details[data-crit-num='"+currentCritNum+"']")).getElementsByTagName("textarea");
+    critList[currentCritNum] = [currentCrit.value, critList[currentCritNum][1], details.item(0).value, details.item(1).value, details.item(2).value, details.item(3).value];
     sessionStorage.setItem("critList", JSON.stringify(critList));
     document.querySelector((".saveButton[data-crit-num='"+currentCritNum+"']")).remove();
 
@@ -76,7 +85,7 @@ document.getElementById("critList").addEventListener("click", (event) => {
 })
 
 //limits titles to 20 characters
-document.getElementById("critList").addEventListener("keypress", function(event) {
+document.getElementById("critList").addEventListener("keydown", function(event) {
     if (event.target.className === "critName") {
       if((event.target.value.length) > 19){
         event.preventDefault();
@@ -85,6 +94,12 @@ document.getElementById("critList").addEventListener("keypress", function(event)
         if(saveNotExists){
           event.target.insertAdjacentHTML('afterend', ('<button class="saveButton" data-crit-num="'+event.target.getAttribute("data-crit-num")+'">Save</button>'));
         }
+      }
+    }else if(event.target.tagName = "textarea"){
+      let saveNotExists = document.querySelector((".saveButton[data-crit-num='"+event.target.parentNode.getAttribute("data-crit-num")+"']")) === null;
+      if(saveNotExists){
+        console.log("Hi");
+        event.target.parentNode.parentNode.childNodes.item(0).insertAdjacentHTML('beforebegin', ('<button class="saveButton" data-crit-num="'+event.target.parentNode.getAttribute("data-crit-num")+'">Save</button>'));
       }
     }
   }

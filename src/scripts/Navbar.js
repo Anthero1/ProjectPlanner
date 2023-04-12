@@ -24,10 +24,10 @@ function replaceTargetWith(targetID, html ){
 
 function addNavBar(active){
     var classType = ['notActive', 'activeTab'];
-    replaceTargetWith('navbar', ('<ul class="navbar"><li><a class="'+classType[active[0]]+'"href="Mission.html">Mission</a></li><li><a class="'+classType[+active[1]]+'" href="Criteria.html">Criteria</a></li><li><a class="'+classType[active[2]]+'" href="Ranking.html">Ranking</a></li><li><a class="'+classType[active[3]]+'" href="Tasks.html">Tasks</a></li><li><a class="'+classType[active[4]]+'" href="Budget.html">Budget</a></li></ul>'));
+    replaceTargetWith('navbar', ('<ul class="navbar"><li><a class="'+classType[active[0]]+'"href="Mission.html">Mission</a></li><li><a class="'+classType[+active[1]]+'" href="Criteria.html">Criteria</a></li><li><a class="'+classType[active[2]]+'" href="Ranking.html">Ranking</a></li><li><a class="'+classType[active[3]]+'" href="Tasks.html">Tasks</a></li><li><a class="'+classType[active[4]]+'" href="Scope.html">Scope</a></li><li><a class="'+classType[active[5]]+'" href="Budget.html">Budget</a></li></ul>'));
 }
 
 const val = document.getElementsByClassName("docName");
-var actives = [0,0,0,0,0];
+var actives = [0,0,0,0,0,0];
 actives[Number(val.item(0).getAttribute("name"))]=1;
 addNavBar(actives);
