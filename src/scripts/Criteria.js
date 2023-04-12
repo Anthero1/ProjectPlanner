@@ -134,5 +134,9 @@ document.getElementById("critList").addEventListener("click", (event) => {
   }
 })
 
+var testing = [["test1",-1,0,0,0,0],["test2",-1,0,0,0,0],["test3",-1,0,0,0,0],["test4",-1,0,0,0,0]];
+//sessionStorage.setItem("critList", JSON.stringify(testing));
 
 loadCritList()
+
+
