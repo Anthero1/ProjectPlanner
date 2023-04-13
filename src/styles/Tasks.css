@@ -1,12 +1,92 @@
 html {
     background-color:#141414;
-    height: 200vw;
     font-family: Arial, Helvetica, sans-serif;
-    padding-top:4vh;
     overflow: visible;
     min-width:320px;
+    border:0px;
+    margin:0px;
+}
+
+body{
+    margin:0px;
+    padding-top:4vh;
+    min-height: 130px;
 }
 
 h1 {
     color:aquamarine;
+}
+
+:root{
+    --taskWidth: 200px;
+}
+
+div#TaskList{
+    float:left;
+    width:200px;
+    height: 96vh;
+    background-color: #4a4a4a;
+    overflow-y:scroll;
+    overflow-x:hidden;
+}
+
+div#DetailsDisplay{
+    background-color: #141414;
+    height: 100%;
+    width:813px;
+    padding-left:200px;
+    color:aquamarine;
+    margin:30px;
+}
+
+div.Task{
+    width:100%;
+    height:65px;
+    line-height: 65px;
+    background-color:#292929;
+    text-align: center;
+    color:aqua;
+    border:2px solid #141414;
+    margin: 0px;
+    padding:0px;
+
+}
+
+div.Task[data-active="true"]{
+    background-color:#141414;
+}
+
+div#addTask{
+    background-color: #5a6775;
+    width:100%;
+    height:65px;
+    line-height: 65px;
+    text-align: center;
+    display: inline-block;
+}
+
+/* width */
+::-webkit-scrollbar {
+    background:#141414;
+    width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background:#141414;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #343434; 
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background:#3b3b3b;
+}
+
+
+button.saveBtn{
+    float:right;
 }
