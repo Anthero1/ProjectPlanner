@@ -33,7 +33,7 @@ div#TaskList{
 div#DetailsDisplay{
     background-color: #141414;
     height: 100%;
-    width:813px;
+    width:1044;
     padding-left:200px;
     color:aquamarine;
     margin:30px;
@@ -90,3 +90,19 @@ div#addTask{
 button.saveBtn{
     float:right;
 }
+
+ul#applCrit {
+    display: table;
+    min-width: 240px;
+    vertical-align: middle;
+}
+
+ul#applCrit li {
+    padding-left:15px;
+    border: 1px solid #4a4a4a;
+    list-style-type: none;
+    height: 40px;
+    line-height: 40px;
+}
+
+

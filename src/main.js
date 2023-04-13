@@ -15,8 +15,8 @@ const createWindow = () => {
     },
   })
 
-
-  win.loadFile('src/pages/Mission.html')
+  win.loadFile('src/pages/Mission.html');
+  win.maximize();
 
   ipcMain.on("saveCrit", (event, content) => {
     win.webContents.send("newCrit", content);
