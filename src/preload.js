@@ -4,7 +4,7 @@ contextBridge.exposeInMainWorld("ipc", {
   newCrit: () => ipcRenderer.send("newCrit"),
   leaveCrit: () => ipcRenderer.invoke("leaveCrit"),
   saveAllData: () => saveData(),
-  retrieveData: () => ipcRenderer.send("retrieveData")
+  retrieveData: () => ipcRenderer.invoke("retrieveData")
 })
 
 const saveData = () => {
@@ -63,15 +63,4 @@ ipcRenderer.on("newCrit", (event, content) => {
     description.insertAdjacentHTML("beforeend",'<p>How does this criteria tie into the mission statement?</p>');
     description.insertAdjacentHTML("beforeend", '<textarea class="Mission">'+critList[i][5]+'</textarea>')
   }
-})
-
-
-ipcRenderer.on("saveData", (event, content) => {
-  console.log(content);
-  //content = JSON.parse(content);
-  sessionStorage.setItem("MissionStatement", content.MissionStatement);
-  sessionStorage.setItem("critList", JSON.stringify(content.Criteria));
-  sessionStorage.setItem("compList", JSON.stringify(content.Comparisons));
-  sessionStorage.setItem("taskList", JSON.stringify(content.Tasks));
-  sessionStorage.setItem("budget", content.Budget);
 })

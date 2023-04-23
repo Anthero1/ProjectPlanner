@@ -66,7 +66,6 @@ function compares(a, b) {
 
 const calculateTaskRanks = () => {
     let tasks = JSON.parse(sessionStorage.getItem("taskList"));
-    console.log(tasks)
     tasksRanked = [];
     for(let i = 0; i < tasks.length; i++){
         let temp = 0;
@@ -78,7 +77,6 @@ const calculateTaskRanks = () => {
         tasksRanked.push([temp,tasks[i]]);
     }
     tasksRanked.sort(compares);
-    console.log(tasksRanked);
 }
 
 
@@ -94,7 +92,6 @@ const loadRanks = () => {
     let budget=sessionStorage.getItem("budget");
     if(budget==null){
         budget=Number.MAX_VALUE;
-        console.log(budget);
         alert("Please enter and submit a budget on the Mission screen");
     }
 
@@ -108,7 +105,7 @@ const loadRanks = () => {
         }
 
         console.log(currentBudget);
-        if(currentBudget<budget){
+        if(currentBudget<=budget){
             rankList.insertAdjacentHTML("beforeend", '<div class="task" data-in-budget="true">'+tasksRanked[i][1][0]+'</div>')
         }else {
             rankList.insertAdjacentHTML("beforeend", '<div class="task" data-in-budget="false">'+tasksRanked[i][1][0]+'</div>')

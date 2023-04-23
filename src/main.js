@@ -1,27 +1,14 @@
 const { dialog, app, BrowserWindow, ipcMain, session } = require('electron');
 const path = require("path");
 var fs = require('fs');
+const fsp = require('fs').promises;
 
 let saveLoc = "C:\\Temporary\\temp.json";
 let saveData = null;
 
-const readSave = () => {
-  fs.readFile(saveLoc, "utf-8", (err, jsonString) => {
-    if (err) {
-      console.log("Error reading file: "+err);
-      return;
-    }
-    try {
-      saveData = JSON.parse(jsonString);
-    } catch (err) {
-      console.log(err);
-    }
-  })
-}
 
 
 const createWindow = () => {
-
   const win = new BrowserWindow({
     width: 800,
     height: 600,
@@ -29,7 +16,6 @@ const createWindow = () => {
         preload: path.join(__dirname, 'preload.js'),
     },
   })
-
   win.loadFile('src/pages/Mission.html');
   win.maximize();
 
@@ -51,13 +37,12 @@ const createWindow = () => {
     };
     return dialog.showMessageBoxSync(win, options);
   })
-
-  ipcMain.on("retrieveData", async () => {
-      await readSave();
-      console.log("hi")
-    win.webContents.send("saveData", saveData);
-  })
 }
+
+ipcMain.handle("retrieveData", async () => {
+  saveData = await fsp.readFile(saveLoc, "utf-8");
+  return saveData;
+})
 
 ipcMain.on("saveData", (event, content) => {
 

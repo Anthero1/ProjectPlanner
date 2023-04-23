@@ -8,12 +8,19 @@ document.getElementById("budgetBox").addEventListener("keyup", () => {
   sessionStorage.setItem("budget", document.getElementById("budgetBox").value.toString());
 })
 
-document.getElementById("missionSubmit").addEventListener("click", () => {
+document.getElementById("save").addEventListener("click", () => {
   ipc.saveAllData();
 })
 
-document.getElementById("budgetSubmit").addEventListener("click", () => {
-  ipc.retrieveData();
+document.getElementById("load").addEventListener("click", async () => {
+  let data = await ipc.retrieveData();
+  console.log(data);
+  console.log(JSON.parse(data))
+  sessionStorage.setItem("MissionStatement", JSON.parse(data).MissionStatement);
+  sessionStorage.setItem("critList", JSON.stringify(JSON.parse(data).Criteria));
+  sessionStorage.setItem("compList", JSON.stringify(JSON.parse(data).Comparisons));
+  sessionStorage.setItem("taskList", JSON.stringify(JSON.parse(data).Tasks));
+  sessionStorage.setItem("budget", JSON.parse(data).Budget);
 })
 
 try{
