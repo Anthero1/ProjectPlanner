@@ -1,14 +1,31 @@
 const { contextBridge, ipcRenderer, dialog} = require('electron');
 
 contextBridge.exposeInMainWorld("ipc", {
-  saveThis: (identifier, content) => ipcRenderer.send(identifier, content),
   newCrit: () => ipcRenderer.send("newCrit"),
-  leaveCrit: () => ipcRenderer.invoke("leaveCrit")
+  leaveCrit: () => ipcRenderer.invoke("leaveCrit"),
+  saveAllData: () => saveData(),
+  retrieveData: () => ipcRenderer.send("retrieveData")
 })
+
+const saveData = () => {
+  var content = [];
+  let mission = sessionStorage.getItem("MissionStatement");
+  let criteria = JSON.parse(sessionStorage.getItem("critList"));
+  let comparisons = JSON.parse(sessionStorage.getItem("compList"));
+  let tasks = JSON.parse(sessionStorage.getItem("taskList"));
+  let budget = sessionStorage.getItem("budget");
+  content.push(mission);
+  content.push(criteria);
+  content.push(comparisons);
+  content.push(tasks);
+  content.push(budget);
+  ipcRenderer.send("saveData", content);
+}
 
 document.addEventListener('DOMContentLoaded', function () {
   document.getElementsByTagName("title").item(0).innerHTML="PM Scheduler";
 })
+
 
 ipcRenderer.on("newCrit", (event, content) => {
   critList = JSON.parse(sessionStorage.getItem("critList"));
@@ -46,4 +63,15 @@ ipcRenderer.on("newCrit", (event, content) => {
     description.insertAdjacentHTML("beforeend",'<p>How does this criteria tie into the mission statement?</p>');
     description.insertAdjacentHTML("beforeend", '<textarea class="Mission">'+critList[i][5]+'</textarea>')
   }
+})
+
+
+ipcRenderer.on("saveData", (event, content) => {
+  console.log(content);
+  //content = JSON.parse(content);
+  sessionStorage.setItem("MissionStatement", content.MissionStatement);
+  sessionStorage.setItem("critList", JSON.stringify(content.Criteria));
+  sessionStorage.setItem("compList", JSON.stringify(content.Comparisons));
+  sessionStorage.setItem("taskList", JSON.stringify(content.Tasks));
+  sessionStorage.setItem("budget", content.Budget);
 })

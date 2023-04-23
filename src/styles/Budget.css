@@ -5,9 +5,32 @@ html {
     padding-top:4vh;
     overflow: visible;
     min-width:320px;
+    align-items: center;
+    text-align: center;
 }
 
 h1 {
     color:aquamarine;
+}
+
+div#taskList{
+    margin-left:auto;
+    margin-right:auto;
+    width:40%;
+    height:100%;
+    color:antiquewhite;
+    border: 1px solid #232323;
+}
+
+div.task{
+    height:40px;
+    color:antiquewhite;
+    line-height: 40px;
+    border: 1px solid #323232;
+    border-collapse: collapse;
+}
+
+div.task[data-in-budget="false"]{
+    border: 2px solid #b20c0c
 }
 

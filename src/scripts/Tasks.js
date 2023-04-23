@@ -4,7 +4,6 @@ const loadTasks = () => {
     if(taskList!=null){
         length=taskList.length;
     }
-    //console.log(taskList)
     for(let x = 0; x < length; x++){
         document.getElementById("addTask").insertAdjacentHTML("beforebegin", '<div class="Task" data-task="'+x+'">'+taskList[x][0]+'</div>');
     }
@@ -20,7 +19,7 @@ const createFields = () => {
         length = critList.length
     }
     for(let i = 0; i < length; i++){
-        document.getElementById("applCrit").insertAdjacentHTML('beforeend', '<li data-crit-num="'+i+'"><input type="checkbox" />'+critList[i][0]+'</li>')
+        document.getElementById("applCrit").insertAdjacentHTML('beforeend', '<li data-crit-num="'+i+'"><input type="checkbox" data-crit-num="'+i+'" class="critCheck"/>'+critList[i][0]+'</li>')
     }
 }
 
@@ -34,11 +33,20 @@ const loadContent = (x) => {
     while(cont){
         details = document.getElementById("DetailsDisplay").childNodes;
         for(let i = 0; i < 3; i++){
-            //console.log(details[i*2-1]);
             details[i*2+1].value=taskList[x][i];
             cont = false;
         }
-        console.log(details);
+        let checkBoxes=document.getElementsByClassName("critCheck");
+        if(taskList[x][3].length==checkBoxes.length){
+            for(let z = 0; z < taskList[x][3].length;z++){
+                checkBoxes.item(z).checked = taskList[x][3][z];
+            }
+        }else{
+            console.log(checkBoxes.length);
+            for(let z = 0; z < checkBoxes.length;z++){
+                checkBoxes.item(z).checked = false;
+            }
+        }
     }
 }
 
@@ -55,15 +63,6 @@ document.getElementById("TaskList").addEventListener("click", (event) => {
         loadContent(event.target.getAttribute("data-task"));
     }
 })
-
-// document.getElementById("TaskList").addEventListener("mouseover", (event) =>{
-//     (document.getElementById("TaskList").style.overflowY) = "scroll";
-// })
-
-// document.getElementById("DetailsDisplay").addEventListener("mouseover", (event) =>{
-//     (document.getElementById("TaskList").style.overflowY) = "hidden";
-//     console.log("happened")
-// })
 
 
 //makes the addTask button function
@@ -108,8 +107,17 @@ document.getElementById("DetailsDisplay").addEventListener("click", (event) => {
         taskList[taskNum][0]=details[2].value;
         taskList[taskNum][1]=details[4].value;
         taskList[taskNum][2]=details[6].value;
+
+        let critChoices = [];
+        checkBoxes=document.getElementsByClassName("critCheck");
+        for(let i = 0; i < checkBoxes.length; i++){
+            critChoices.push(checkBoxes.item(i).checked);
+        }
+        taskList[taskNum][3]=critChoices;
+        
         document.querySelector((".saveBtn")).remove();
         sessionStorage.setItem('taskList', JSON.stringify(taskList));
+        console.log(taskList)
         document.querySelector(".Task[data-active='true']").innerHTML = details[1].value;
     }
 })
@@ -128,6 +136,14 @@ document.getElementById("DetailsDisplay").addEventListener("click", (event) => {
 //             document.querySelector(".Task[data-active='true']").innerHTML = event.target.value;
 //         }
 //     }
+// })
+
+// document.getElementById("TaskList").addEventListener("mouseover", (event) =>{
+//     (document.getElementById("TaskList").style.overflowY) = "scroll";
+// })
+
+// document.getElementById("DetailsDisplay").addEventListener("mouseover", (event) =>{
+//     (document.getElementById("TaskList").style.overflowY) = "hidden";
 // })
 
 var taskList = JSON.parse(sessionStorage.getItem("taskList"));

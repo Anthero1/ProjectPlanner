@@ -18,9 +18,8 @@ div.critRanker {
     margin-bottom: 3px;
 }
 
-div.comparison:not([data-comp-num="0"]){
+div.comparison:not([data-comp-num="-1"]){
     border-top: 2px solid #2f2f2f;
-
 }
 
 p.leftCrit {
@@ -38,6 +37,11 @@ input.rankChoice {
     margin-right:20px;
 }
 
+input.rankChoice[data-choice="1"] {
+    margin-left:19px;
+    margin-right:19px;
+}
+
 p.rightCrit {
     color:antiquewhite;
     display: inline-block;
@@ -46,3 +50,18 @@ p.rightCrit {
     width: 250px;
 }
 
+div.compNums p{
+    display: inline-block;
+    margin-left:22px;
+    margin-right:22px;
+}
+
+div.compNums{
+    border-top: 2px solid #2f2f2f;
+    color:aquamarine;
+    padding-left:290px;
+}
+
+div.compNums:first-child{
+    border-top: 0px solid #2f2f2f;
+}

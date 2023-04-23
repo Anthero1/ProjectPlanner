@@ -3,7 +3,22 @@ const path = require("path");
 var fs = require('fs');
 
 let saveLoc = "C:\\Temporary\\temp.json";
-let discard = false;
+let saveData = null;
+
+const readSave = () => {
+  fs.readFile(saveLoc, "utf-8", (err, jsonString) => {
+    if (err) {
+      console.log("Error reading file: "+err);
+      return;
+    }
+    try {
+      saveData = JSON.parse(jsonString);
+    } catch (err) {
+      console.log(err);
+    }
+  })
+}
+
 
 const createWindow = () => {
 
@@ -28,13 +43,19 @@ const createWindow = () => {
   ipcMain.handle("leaveCrit", (event) => {
     const options = {
       type: 'warning',
-      buttons: ['Leave', 'Cancel'],
+      buttons: ['Cancel', 'Leave'],
       icon: "r.jpg",
       message: 'Leave Criteria Screen?',
       detail: 'Changes that you made will not be saved.',
       noLink: true,
     };
     return dialog.showMessageBoxSync(win, options);
+  })
+
+  ipcMain.on("retrieveData", async () => {
+      await readSave();
+      console.log("hi")
+    win.webContents.send("saveData", saveData);
   })
 }
 
@@ -46,15 +67,20 @@ ipcMain.on("saveData", (event, content) => {
       return;
     }
     try {
-      const saveFile = JSON.parse(jsonString);
-      saveFile.MissionStatement=content;
-      saveJSON(saveFile);
+      const fileToSave = JSON.parse(jsonString);
+      fileToSave.MissionStatement=content[0];
+      fileToSave.Criteria=content[1];
+      fileToSave.Comparisons=content[2];
+      fileToSave.Tasks=content[3];
+      fileToSave.Budget=content[4];
+      saveJSON(fileToSave);
     } catch (err) {
       console.log(err);
     }
   })
 
 })
+
 
 ipcMain.on("newCrit", (event) => {
   var discard=false;
@@ -75,7 +101,7 @@ ipcMain.on("newCrit", (event) => {
     if(!discard){
       const options = {
         type: 'warning',
-        buttons: ['Leave', 'Cancel'],
+        buttons: ['Cancel', 'Leave'],
         message: 'Close Window?',
         detail: 'Changes that you made will not be saved.',
         noLink: true,

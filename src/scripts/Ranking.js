@@ -1,9 +1,17 @@
 document.addEventListener("DOMContentLoaded", () => {
-
     critList = JSON.parse(sessionStorage.getItem("critList"));
     compList = JSON.parse(sessionStorage.getItem("compList"));
 
     for(var i = 0; i <critList.length; i++){
+        if(i+1<critList.length){
+            document.getElementsByClassName("critRanker").item(0).insertAdjacentHTML("beforeend", '<div class="compNums"></div>');
+            for(var y = -9; y <= 9; y++){
+                if(y==0){
+                    y+=2;
+                }
+                document.getElementsByClassName("compNums").item(document.getElementsByClassName("compNums").length-1).insertAdjacentHTML("beforeend", '<p>'+Math.abs(y)+'</p>');
+            }
+        }
         for(var x = i+1; x < critList.length; x++){
 
             document.getElementsByClassName("critRanker").item(0).insertAdjacentHTML("beforeend", '<div class="comparison" data-comp-num="'+document.getElementsByClassName("comparison").length+'"></div>')
