@@ -4,7 +4,8 @@ contextBridge.exposeInMainWorld("ipc", {
   newCrit: () => ipcRenderer.send("newCrit"),
   leaveCrit: () => ipcRenderer.invoke("leaveCrit"),
   saveAllData: () => saveData(),
-  retrieveData: () => ipcRenderer.invoke("retrieveData")
+  retrieveData: () => ipcRenderer.invoke("retrieveData"),
+  csvImport: () => ipcRenderer.invoke("csvImport", "./src/testing.txt")
 })
 
 const saveData = () => {

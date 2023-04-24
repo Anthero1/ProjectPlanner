@@ -12,6 +12,14 @@ document.getElementById("save").addEventListener("click", () => {
   ipc.saveAllData();
 })
 
+document.getElementById("csv").addEventListener("click", async () => {
+  let csvImport = await ipc.csvImport();
+  console.log(csvImport);
+
+  
+  sessionStorage.setItem("csvImport", csvImport);
+})
+
 document.getElementById("load").addEventListener("click", async () => {
   let data = await ipc.retrieveData();
   console.log(data);

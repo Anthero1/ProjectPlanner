@@ -7,7 +7,6 @@ let saveLoc = "C:\\Temporary\\temp.json";
 let saveData = null;
 
 
-
 const createWindow = () => {
   const win = new BrowserWindow({
     width: 800,
@@ -38,6 +37,22 @@ const createWindow = () => {
     return dialog.showMessageBoxSync(win, options);
   })
 }
+
+
+const CSVToArray = (data, delimiter = '\t', omitFirstRow = false) =>
+  data
+    .slice(omitFirstRow ? data.indexOf('\n') + 1 : 0)
+    .split('\n')
+    .map(v => v.split(delimiter));
+
+
+
+ipcMain.handle("csvImport", async(event, content) => {
+  let csvImport = await fsp.readFile(content, "utf-8");
+  let testing = CSVToArray(csvImport)
+  console.log(testing);
+  return(testing);
+})
 
 ipcMain.handle("retrieveData", async () => {
   saveData = await fsp.readFile(saveLoc, "utf-8");

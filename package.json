@@ -10,9 +10,12 @@
   "author": "Anthony Eroukov",
   "license": "ISC",
   "devDependencies": {
+    "@types/node": "^18.16.0",
     "electron": "^23.2.4"
   },
   "dependencies": {
-    "electron-store": "^8.1.0"
+    "electron-store": "^8.1.0",
+    "jquery": "^3.6.4",
+    "jquery-csv": "^1.0.21"
   }
 }
