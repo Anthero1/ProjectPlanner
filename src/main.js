@@ -39,19 +39,55 @@ const createWindow = () => {
 }
 
 
-const CSVToArray = (data, delimiter = '\t', omitFirstRow = false) =>
-  data
-    .slice(omitFirstRow ? data.indexOf('\n') + 1 : 0)
-    .split('\n')
-    .map(v => v.split(delimiter));
+const CSVToArray = (data, delimiter = ',', omitFirstRow = false) => {
+  //data = data.slice(omitFirstRow ? data.indexOf('\n') + 1 : 0)
+    // .split('\n')
+    // .map(v => v.split(delimiter));
+  let ansArray=[];
+  let tempArray=[];
+  let lastLoc=0;
+
+  for(let i = 0; i < data.length;i++){//iterate over every character in the csv
+
+    if(data[i]=='"'){//if the character is the start of a quote, then set the entire quote as one entry in the array. Ignore commas, new lines, and other special characters inside the quote
+      let j = i+1;
+      while(data[j]!='"'&&j<data.length){//iterate until the end of the quote is found
+        j++;
+      }
+      tempArray.push(data.substring(i+1,j));//push this quote to the array
+
+      //update the i and last loc values after the quote
+      if(data[j+1]==","){
+        i=j+1;
+        lastLoc=j+2;
+      }else if(data.substring(j+1, j+3)=="\r\n"){
+        ansArray.push(tempArray);
+        tempArray=[];
+        i=j+2;
+        lastLoc=j+3;
+      }
+    } 
+    else if(data[i]==delimiter){
+      tempArray.push(data.substring(lastLoc,i));
+      lastLoc=i+1;
+    }
+    else if(data.substring(i,i+2)=="\r\n"){
+      tempArray.push(data.substring(lastLoc, i));
+      lastLoc=i+2;
+      i++;
+      ansArray.push(tempArray);
+      tempArray=[];
+    }
+  }
+  return ansArray;
+}
 
 
 
 ipcMain.handle("csvImport", async(event, content) => {
   let csvImport = await fsp.readFile(content, "utf-8");
   let testing = CSVToArray(csvImport)
-  console.log(testing);
-  return(testing);
+  return (testing);
 })
 
 ipcMain.handle("retrieveData", async () => {
