@@ -16,7 +16,7 @@ document.getElementById("csv").addEventListener("click", async () => {
   let csvImport = await ipc.csvImport();
   console.log(csvImport);
 
-  sessionStorage.setItem("csvImport", csvImport);
+  sessionStorage.setItem("csvImport", JSON.stringify(csvImport));
 })
 
 document.getElementById("load").addEventListener("click", async () => {

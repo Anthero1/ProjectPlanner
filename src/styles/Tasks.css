@@ -65,6 +65,16 @@ div#addTask{
     display: inline-block;
 }
 
+div#importTask{
+    border-top: 1px solid black;
+    background-color: #5a6775;
+    width:100%;
+    height:65px;
+    line-height: 65px;
+    text-align: center;
+    display: inline-block;
+}
+
 /* width */
 ::-webkit-scrollbar {
     background:#141414;

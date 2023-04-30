@@ -5,6 +5,7 @@ const fsp = require('fs').promises;
 
 let saveLoc = "C:\\Temporary\\temp.json";
 let saveData = null;
+let taskImport = "";
 
 
 const createWindow = () => {
@@ -20,6 +21,10 @@ const createWindow = () => {
 
   ipcMain.on("saveCrit", (event, content) => {
     win.webContents.send("newCrit", content);
+    console.log(content);
+  })
+  ipcMain.on("saveImport", (event, content) => {
+    win.webContents.send("saveImport", content);
     console.log(content);
   })
   ipcMain.on("DiscardCrit", () => {
@@ -112,11 +117,22 @@ const CSVToArray = (data, delimiter = ',', omitFirstRow = false) => {
 }
 
 
-
-ipcMain.handle("csvImport", async(event, content) => {
-  let csvImport = await fsp.readFile(content, "utf-8");
-  let testing = CSVToArray(csvImport)
-  return (testing);
+ipcMain.handle("csvImport", async(event) => {
+  await dialog.showOpenDialog({properties: ['openFile'] }).then(async function (response) {
+    if (!response.canceled) {
+        taskImport = response.filePaths[0]
+    } else {
+      console.log("no file selected");
+    }
+  });
+  if(taskImport!=null){
+    let csvImport = await fsp.readFile(taskImport, "utf-8");
+    let testing = CSVToArray(csvImport)
+    taskImport=null;
+    return (testing);
+  }else{
+    return (null);
+  }
 })
 
 ipcMain.handle("retrieveData", async () => {
@@ -178,6 +194,42 @@ ipcMain.on("newCrit", (event) => {
     }
   })
   ipcMain.on("saveCrit", (event, content) => {
+    discard = true;
+  })
+})
+
+
+ipcMain.on("taskImport", (event) => {
+  var discard=false;
+  console.log("okay");
+
+  var critInput = new BrowserWindow({
+    // width: 800,
+    // height: 600,
+    webPreferences: {
+        preload: path.join(__dirname, 'taskImportPreload.js'),
+    },
+  })
+  critInput.maximize();
+  critInput.loadFile('src/pages/TaskImport.html')
+
+
+  critInput.on("close", (event) => {
+    if(!discard){
+      const options = {
+        type: 'warning',
+        buttons: ['Cancel', 'Leave'],
+        message: 'Close Window?',
+        detail: 'Import that you made will not be saved.',
+        noLink: true,
+      };
+      const response = dialog.showMessageBoxSync(critInput, options)
+      if(response==0){
+        event.preventDefault();
+      }
+    }
+  })
+  ipcMain.on("saveImport", (event, content) => {
     discard = true;
   })
 })

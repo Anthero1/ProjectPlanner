@@ -79,6 +79,13 @@ document.getElementById("addTask").addEventListener("click", (event) => {
 })
 
 
+//makes the Import Tasks button function
+document.getElementById("importTask").addEventListener("click", (event) => {
+    ipc.taskImport();
+})
+
+
+
 //makes a save button when editing the fields onscreen (if one doesn't already exists)
 document.getElementById("DetailsDisplay").addEventListener("keypress", (event) => {
     let saveExists = document.querySelector((".saveBtn")) !== null;

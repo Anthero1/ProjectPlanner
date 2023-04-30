@@ -2,10 +2,11 @@ const { contextBridge, ipcRenderer, dialog} = require('electron');
 
 contextBridge.exposeInMainWorld("ipc", {
   newCrit: () => ipcRenderer.send("newCrit"),
+  taskImport: () => ipcRenderer.send("taskImport"),
   leaveCrit: () => ipcRenderer.invoke("leaveCrit"),
   saveAllData: () => saveData(),
   retrieveData: () => ipcRenderer.invoke("retrieveData"),
-  csvImport: () => ipcRenderer.invoke("csvImport", "./src/testing.csv")
+  csvImport: () => ipcRenderer.invoke("csvImport")
 })
 
 const saveData = () => {
@@ -64,4 +65,9 @@ ipcRenderer.on("newCrit", (event, content) => {
     description.insertAdjacentHTML("beforeend",'<p>How does this criteria tie into the mission statement?</p>');
     description.insertAdjacentHTML("beforeend", '<textarea class="Mission">'+critList[i][5]+'</textarea>')
   }
+})
+
+ipcRenderer.on("saveImport", (event, content) => {
+  console.log(content);
+  sessionStorage.setItem("csvImport", JSON.stringify(content));
 })
