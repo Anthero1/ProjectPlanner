@@ -203,18 +203,18 @@ ipcMain.on("taskImport", (event) => {
   var discard=false;
   console.log("okay");
 
-  var critInput = new BrowserWindow({
+  var taskImport = new BrowserWindow({
     // width: 800,
     // height: 600,
     webPreferences: {
         preload: path.join(__dirname, 'taskImportPreload.js'),
     },
   })
-  critInput.maximize();
-  critInput.loadFile('src/pages/TaskImport.html')
+  taskImport.maximize();
+  taskImport.loadFile('src/pages/TaskImport.html')
 
 
-  critInput.on("close", (event) => {
+  taskImport.on("close", (event) => {
     if(!discard){
       const options = {
         type: 'warning',

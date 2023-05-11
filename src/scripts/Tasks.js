@@ -10,9 +10,16 @@ const loadTasks = () => {
 }
 
 
-const createFields = () => {
+const createFields = (task) => {
+    //get the area where everything will be displayed
     let details = document.getElementById("DetailsDisplay");
-    details.insertAdjacentHTML("afterbegin", '<h1>Title:</h1><textarea></textarea><h1>Description:</h1><textarea></textarea><h1>Budget: (only input numbers)</h1><textarea></textarea>');
+
+    //remove everything that was displayed for the previous task
+    while(details.children.length!=0){
+        details.children.item(0).remove();
+    }
+
+    //add in the criteria ranking choices
     details.insertAdjacentHTML("beforeend", '<h1>Applicable Criteria:</h1><ul id="applCrit"></ul>');
     let length = 0;
     if(critList!=null){
@@ -21,37 +28,42 @@ const createFields = () => {
     for(let i = 0; i < length; i++){
         document.getElementById("applCrit").insertAdjacentHTML('beforeend', '<li data-crit-num="'+i+'"><input type="checkbox" data-crit-num="'+i+'" class="critCheck"/>'+critList[i][0]+'</li>')
     }
+
+    //add in the description fields.
+    for(let i = 0; i < task.length;i++){
+        details.insertAdjacentHTML("beforeend", '<h1>'+task[i][0]+':</h1><textarea></textarea>');
+    }
+
+    console.log(details.children);
 }
 
 
 const loadContent = (x) => {
-    if(document.getElementById("DetailsDisplay").childNodes.length==0){
-        createFields();
-    }
+    createFields(taskList[x]);
+
     let details = null;
-    let cont = true;
-    while(cont){
-        details = document.getElementById("DetailsDisplay").childNodes;
-        for(let i = 0; i < 3; i++){
-            details[i*2+1].value=taskList[x][i];
-            cont = false;
+    details = document.getElementById("DetailsDisplay").children;
+    for(let i = 3; i < details.length; i++){
+        if(i%2!=0){
+            console.log(taskList[x])
+            details[i].value=taskList[x][(i-3)/2][1];
         }
-        let checkBoxes=document.getElementsByClassName("critCheck");
-        if(taskList[x][3].length==checkBoxes.length){
-            for(let z = 0; z < taskList[x][3].length;z++){
-                checkBoxes.item(z).checked = taskList[x][3][z];
-            }
-        }else{
-            console.log(checkBoxes.length);
-            for(let z = 0; z < checkBoxes.length;z++){
-                checkBoxes.item(z).checked = false;
-            }
+    }
+    let checkBoxes=document.getElementsByClassName("critCheck");
+    if(taskList[x][taskList[x].length-1].length==checkBoxes.length){
+        for(let z = 0; z < taskList[x][taskList[x].length-1].length;z++){
+            checkBoxes.item(z).checked = taskList[x][taskList[x].length-1][z];
+        }
+    }else{
+        for(let z = 0; z < checkBoxes.length;z++){
+            checkBoxes.item(z).checked = false;
         }
     }
 }
 
 //load task info on task click
 document.getElementById("TaskList").addEventListener("click", (event) => {
+    taskList = JSON.parse(sessionStorage.getItem("taskList"));
     if((event.target.className == "Task")){
         let list = document.getElementById("TaskList").getElementsByClassName("Task");
         for(let i = 0; i < list.length; i++){
@@ -129,29 +141,6 @@ document.getElementById("DetailsDisplay").addEventListener("click", (event) => {
     }
 })
 
-// //Makes the title autoupdate in the taskList if its edited in the details section
-// document.getElementById("DetailsDisplay").addEventListener("keypress", (event) => {
-//     let titleField = document.getElementById("DetailsDisplay").childNodes[2]
-//     if(event.target == titleField){
-//         document.querySelector(".Task[data-active='true']").innerHTML = event.target.value;
-//     }
-// })
-// document.getElementById("DetailsDisplay").addEventListener("keydown", (event) => {
-//     if(event.key == "Backspace"){
-//         let titleField = document.getElementById("DetailsDisplay").childNodes[2];
-//         if(event.target == titleField){
-//             document.querySelector(".Task[data-active='true']").innerHTML = event.target.value;
-//         }
-//     }
-// })
-
-// document.getElementById("TaskList").addEventListener("mouseover", (event) =>{
-//     (document.getElementById("TaskList").style.overflowY) = "scroll";
-// })
-
-// document.getElementById("DetailsDisplay").addEventListener("mouseover", (event) =>{
-//     (document.getElementById("TaskList").style.overflowY) = "hidden";
-// })
 
 var taskList = JSON.parse(sessionStorage.getItem("taskList"));
 var critList=JSON.parse(sessionStorage.getItem("critList"));

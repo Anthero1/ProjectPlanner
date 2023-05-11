@@ -68,6 +68,36 @@ ipcRenderer.on("newCrit", (event, content) => {
 })
 
 ipcRenderer.on("saveImport", (event, content) => {
-  console.log(content);
   sessionStorage.setItem("csvImport", JSON.stringify(content));
+  let taskList = JSON.parse(sessionStorage.getItem("taskList"));
+  let csvTasks = [];
+  let temp = [];
+  for(let i = 1; i < content.length;i++){
+    for(let x = 0; x <content[i].length;x++){
+      temp.push([content[0][x],content[i][x]])
+    }
+    csvTasks.push(temp);
+    temp = [];
+  }
+
+  if(taskList==null){
+    taskList= csvTasks;
+  }else{
+    taskList = taskList.concat(csvTasks);
+  }
+  sessionStorage.setItem("taskList", JSON.stringify(taskList));
+
+
+  let currDisplayed = document.getElementsByClassName("Task");
+  for(let i = 0; i <currDisplayed.length; i++){
+    currDisplayed.item(i).remove();
+  }
+
+  let length=0;
+  if(taskList!=null){
+      length=taskList.length;
+  }
+  for(let x = 0; x < length; x++){
+      document.getElementById("addTask").insertAdjacentHTML("beforebegin", '<div class="Task" data-task="'+x+'">'+taskList[x][0][1]+'</div>');
+  }
 })
