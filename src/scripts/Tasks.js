@@ -38,9 +38,12 @@ const createFields = (task) => {
 }
 
 
+//loads the task info of a certain task
 const loadContent = (x) => {
+    //creates the html fields for this task
     createFields(taskList[x]);
 
+    //fills in the html details for this task
     let details = null;
     details = document.getElementById("DetailsDisplay").children;
     for(let i = 3; i < details.length; i++){
@@ -49,6 +52,7 @@ const loadContent = (x) => {
             details[i].value=taskList[x][(i-3)/2][1];
         }
     }
+    //creates the criteria application choices for each task
     let checkBoxes=document.getElementsByClassName("critCheck");
     if(taskList[x][taskList[x].length-1].length==checkBoxes.length){
         for(let z = 0; z < taskList[x][taskList[x].length-1].length;z++){
@@ -65,12 +69,15 @@ const loadContent = (x) => {
 document.getElementById("TaskList").addEventListener("click", (event) => {
     taskList = JSON.parse(sessionStorage.getItem("taskList"));
     if((event.target.className == "Task")){
+
+        //changes the color of the actively selecte task and resets the color of all other tasks
         let list = document.getElementById("TaskList").getElementsByClassName("Task");
         for(let i = 0; i < list.length; i++){
             if(list.item(i).getAttribute("data-active")==="true"){
                 list.item(i).setAttribute("data-active", "false");
             }
         }
+        //loads the task content
         event.target.setAttribute("data-active", true);
         loadContent(event.target.getAttribute("data-task"));
     }
