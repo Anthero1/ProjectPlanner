@@ -1,5 +1,6 @@
 const { contextBridge, ipcRenderer, dialog} = require('electron');
 
+//expose communication cuntions to the renderer process scripts, so that they can communicate with the main process
 contextBridge.exposeInMainWorld("ipc", {
   newCrit: () => ipcRenderer.send("newCrit"),
   taskImport: () => ipcRenderer.send("taskImport"),
@@ -9,6 +10,7 @@ contextBridge.exposeInMainWorld("ipc", {
   csvImport: () => ipcRenderer.invoke("csvImport")
 })
 
+//retrieve the current session data from session storage, and send it to the main process to be saved
 const saveData = () => {
   var content = [];
   let mission = sessionStorage.getItem("MissionStatement");
@@ -24,11 +26,13 @@ const saveData = () => {
   ipcRenderer.send("saveData", content);
 }
 
+//change the title of the main window to Projee
 document.addEventListener('DOMContentLoaded', function () {
-  document.getElementsByTagName("title").item(0).innerHTML="PM Scheduler";
+  document.getElementsByTagName("title").item(0).innerHTML="Projee";
 })
 
 
+//when the main process returns a newly created crit, add it to the session storage and update the current page to include this
 ipcRenderer.on("newCrit", (event, content) => {
   critList = JSON.parse(sessionStorage.getItem("critList"));
   newCrit= content;
@@ -67,6 +71,8 @@ ipcRenderer.on("newCrit", (event, content) => {
   }
 })
 
+
+//
 ipcRenderer.on("saveImport", (event, content) => {
   sessionStorage.setItem("csvImport", JSON.stringify(content));
   let taskList = JSON.parse(sessionStorage.getItem("taskList"));
